@@ -1,0 +1,50 @@
+EX6:
+
+3 vms: cloudcontroller nodecontroller client
+
+cloudcontroller:
+1. normal 1st half installation
+2. Bridge adapter settings
+3. server version installation
+4. Enterprise cloud
+5. ip: 10.6.15.(100+sysno)
+   netmask:255.255.128.0
+   gateway:10.6.0.1
+   addr:10.101.1.10
+6. complete installation
+7. run server and exit
+
+Nodecontroller:
+1. normal 1st half installation
+2. Bridge adapter settings
+3. server version installation
+4. Enterprise cloud
+5. ip: 10.6.15.(150+sysno)
+   netmask:255.255.128.0
+   gateway:10.6.0.1
+   addr:10.101.1.10
+6. complete installation
+7. run server and exit
+
+client:
+1. normal 1st half installation
+2. Bridge adapter settings
+3. client version installation
+4. browser: no proxy
+5. run cloudcontroller and nodecontroller
+6. browser:https://<cloudip>:8443
+7. download credentials
+8. scp euca2-admin-x509.zip cloudcontroller@<cloudip>:/home/cloudcontroller
+
+cloudcontroller:
+1. mkdir -p ~/.euca
+2. chmod 0700 ~/.euca
+3. chmod 0600 ~/.euca/*
+4. sudo euca_conf --get-credentials mycreds.zip
+5. unzip mycreds.zip
+
+client: 
+1. sudo apt-get install euca2ools
+x509 folder -> eucarc file
+2. euca-create-volume -U <ec2_url> -I <accesskey> -S <secretkey> --size 1 -z cluster1
+3. euca-describe-volumes -U <ec2_url> -I <accesskey> -S <secretkey>

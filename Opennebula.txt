@@ -1,0 +1,48 @@
+EX7:
+
+FrontendVM:
+1. wget -q -O- https://downloads.opennebula.org/repo/repo.key |apt-key add - 
+	sudo apt-get update
+2. apt-get install opennebula opennebula-sunstone opennebula-gate opennebula-flow
+3. /usr/share/one/install_gems
+4. gedit /var/lib/one/.one/one_auth
+5. su oneuser
+	systemctl start opennebula
+	systemctl start opennebula-sunstone 
+	oneuser show
+6. Open browser: localhost:9869
+NodeVM:
+1. sudo -i
+2. wget -q -O- https://downloads.opennebula.org/repo/repo.key |apt-key add - 
+	sudo apt-get update
+3. apt-get install opennebula-node
+
+EX8:
+
+FrontendVM:
+1. list: onehost onevnet onetemplate oneimage oneuser onegroup
+2. onehost create localhost -i kvm -v kvm -n dummy
+	onehost list
+3. cd /var/lib/one
+	ls -l
+	nano mynetwork.one
+	cat mynetwork.one
+4. onevnet create mynetwork.one
+	onevnet list
+5. onetemplate create --name "Centos-6.5" --cpu 1 --vcpu 1 --memory 512 --arch x86_64 --disk "centos6-5.4.0.qcow2c" --nic "private" --vnc --ssh
+	onetemplate list
+6. oneimage create --name "Centos-6.5" --path /home/open-nebula/Downloads/ --datastore default --driver qcow2
+	oneimage list
+
+
+EX9:
+1. list: onehost onetemplate onevm
+2. onehost create host1 -i kvm -v kvm -n dummy
+	another host: host2
+	onehost enable 2,3
+3. Dashboard: template create
+4. Dashboard: instantiate the template for VM
+5. onevm deploy 2 2
+	onevm migrate 2 3
+
+
